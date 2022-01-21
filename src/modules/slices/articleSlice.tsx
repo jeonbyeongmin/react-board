@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AxiosResponse } from "axios";
 
 export interface ArticleData {
   id: number;
@@ -11,12 +12,22 @@ export interface ArticleData {
 }
 
 export interface ArticleState {
+  article: ArticleData;
   articleList: ArticleData[];
   status: number;
   statusText: string;
 }
 
 const initialState = {
+  article: {
+    id: 0,
+    title: "",
+    content: "",
+    views: 0,
+    insertDate: 0,
+    updateDate: 0,
+    boardId: 0,
+  },
   articleList: [],
   status: 0,
   statusText: "Loading",
@@ -26,7 +37,8 @@ const articleSlice = createSlice({
   name: "article",
   initialState,
   reducers: {
-    getArticleList: (state, action) => {},
+    // read articles
+    getArticleList: (state, action: PayloadAction<number>) => {},
     getArticleListSuccess: (state, action) => {
       state.articleList = action.payload?.data ?? [];
       state.status = action.payload?.status;
@@ -37,9 +49,41 @@ const articleSlice = createSlice({
       state.status = action.payload?.status ?? 500;
       state.statusText = action.payload?.statusText ?? "Network Error";
     },
+
+    // read article
+    getArticle: (state, action) => {},
+    getArticleSuccess: (state, action) => {},
+    getArticleError: (state, action) => {
+      state.article = initialState.article;
+      state.status = action.payload?.status ?? 500;
+      state.statusText = action.payload?.statusText ?? "Nextwork Error";
+    },
+
+    // create article
+    postArticle: (state, action) => {},
+    postArticleSuccess: (state, action) => {},
+    postArticleError: (state, action) => {
+      state.status = action.payload?.status ?? 500;
+      state.statusText = action.payload?.statusText ?? "Network Error";
+    },
+
+    // update
+    updateArticleViews: (state, action) => {},
+    updateArticleViewsSuccess: (
+      state,
+      action: PayloadAction<AxiosResponse>
+    ) => {
+      state.article = action.payload?.data ?? {};
+      state.status = action.payload?.status;
+      state.statusText = action.payload?.statusText ?? "Success";
+    },
+    updateArticleViewsError: (state, action) => {
+      state.article = initialState.article;
+      state.status = action.payload?.status ?? 500;
+      state.statusText = action.payload?.statusText ?? "Nextwork Error";
+    },
   },
 });
 
 export const articleReducer = articleSlice.reducer;
-export const { getArticleList, getArticleListSuccess, getArticleListError } =
-  articleSlice.actions;
+export const articleActions = articleSlice.actions;

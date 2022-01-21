@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Board from "../../pages/Board";
+import Board from "../molecules/Board";
 
 function SideBar() {
   return (

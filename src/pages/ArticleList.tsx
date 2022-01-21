@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
-import { getArticleList } from "../modules/slices/articleSlice";
+import { articleActions } from "../modules/slices/articleSlice";
 import { RootState } from "../modules/store";
 
 function ArticleList() {
@@ -17,7 +17,7 @@ function ArticleList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getArticleList(params?.boardId ?? 0));
+    dispatch(articleActions.getArticleList(Number(params?.boardId ?? 0)));
   }, [dispatch, params?.boardId]);
 
   return (

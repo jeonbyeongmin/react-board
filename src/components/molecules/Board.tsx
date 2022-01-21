@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getBoardList } from "../modules/slices/boardSlice";
-import { RootState } from "../modules/store";
+import { getBoardList } from "../../modules/slices/boardSlice";
+import { RootState } from "../../modules/store";
 
 function Board() {
   const { boardList, status, statusText } = useSelector(
